@@ -273,6 +273,8 @@ public class Camera2Photographer implements InternalPhotographer {
 
     @Override
     public void startPreview() {
+        if (isPreviewStarted)
+            return;
         throwIfNotInitialized();
         for (String permission: RECORD_VIDEO_PERMISSIONS) {
             int permissionCheck = ContextCompat.checkSelfPermission(activityContext, permission);
@@ -444,6 +446,8 @@ public class Camera2Photographer implements InternalPhotographer {
 
     @Override
     public void stopPreview() {
+        if (!isPreviewStarted)
+            return;
         isPreviewStarted = false;
         if (orientationEventListener != null) {
             orientationEventListener.disable();
